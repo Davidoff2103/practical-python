@@ -13,3 +13,5 @@ def read_portfolio(filename):
             portfolio.append(holding)
         
     return portfolio
+
+print(read_portfolio('Data/portfolio.csv'))
