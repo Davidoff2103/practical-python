@@ -12,3 +12,7 @@ def main(args):
         raise SystemExit('Usage: %s portfoliofile' % args[0])
     filename = args[1]
     print('Total cost:', portfolio_cost(filename))
+
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)
