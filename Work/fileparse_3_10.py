@@ -1,7 +1,7 @@
 # fileparse.py
 import csv
 
-def parse_csv(filename, select=None, types=None, has_headers=False, delimiter=','):
+def parse_csv(filename, select=None, types=None, has_headers=False, delimiter=',', silence_errors=False):
     '''
     Parse a CSV file into a list of records
     '''
@@ -12,8 +12,7 @@ def parse_csv(filename, select=None, types=None, has_headers=False, delimiter=',
         rows = csv.reader(f, delimiter=delimiter)
 
         # Read the file headers
-        if has_headers:
-            headers = next(rows)
+        headers = next(rows) if has_headers else []
 
         # If a column selector was given, find indices of the specified columns.
         # Also narrow the set of headers used for resulting dictionaries
@@ -34,8 +33,9 @@ def parse_csv(filename, select=None, types=None, has_headers=False, delimiter=',
                 try:
                     row = [func(val) for func, val in zip(types, row)]
                 except ValueError as e:
-                    print(f"Row {rowno}: Couldn't convert {row}")
-                    print(f"Row {rowno}: Reason {e}")
+                    if not silence_errors:
+                        print(f"Row {rowno}: Couldn't convert {row}")
+                        print(f"Row {rowno}: Reason {e}")
             if headers:
                 record = dict(zip(headers, row))
             else:
