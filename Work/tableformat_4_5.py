@@ -7,6 +7,6 @@ class TableFormatter:
 
     def row(self, rowdata):
         '''
-        Emit a single ro of table data
+        Emit a single row of table data
         '''
         raise NotImplementedError()
